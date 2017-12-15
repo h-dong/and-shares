@@ -22,25 +22,21 @@
   import router from '@/router';
   import CONST from '../constants';
 
-  const localData = JSON.parse(localStorage.getItem(CONST.LOCAL_STORAGE));
-
-  // send user to new page if there are no local data
-  // if (!localData) {
-  //   window.location.href= '/#/new';
-  // }
-
-  const shareOptionsData = (localData && localData.data) ? localData.data : [];
-
   export default {
     name: 'Home',
     data() {
       return {
-        shareOptions: shareOptionsData,
+        shareOptions: [],
       };
     },
-    created() {
-      // send user to new page if there are no local data
-      if (this.shareOptions.length === 0) router.push('new');
+    mounted() {
+      const localData = JSON.parse(localStorage.getItem(CONST.LOCAL_STORAGE) || '{}');
+
+      if (localData && localData.data) {
+        this.shareOptions = localData.data;
+      } else {
+        router.push('new');
+      }
     },
   };
 </script>

@@ -77,16 +77,17 @@
     price: 1.58,
   }];
 
-  const localData = JSON.parse(localStorage.getItem(CONST.LOCAL_STORAGE));
-  const shareOptionsData = (localData && localData.data) ? localData.data : [];
-
   export default {
     name: 'Setup',
     data() {
       return {
-        shareOptions: shareOptionsData,
+        shareOptions: [],
         addForm: Object.assign({}, formDefaultValue),
       };
+    },
+    mounted() {
+      const localData = JSON.parse(localStorage.getItem(CONST.LOCAL_STORAGE) || '{}');
+      if (localData && localData.data) this.shareOptions = localData.data;
     },
     methods: {
       addNewOptions() {
