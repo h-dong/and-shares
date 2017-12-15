@@ -1,6 +1,6 @@
 <template>
   <header>
-    <img src="https://static.andigital.com/wp-content/uploads/2017/05/02163341/AND_LOGO_RGB_ON_WHITE.png" alt="logo">
+    <img src="../assets/logo.png" alt="logo">
     <h3><small>shares</small></h3>
     <nav>
       <ul>
