@@ -3,17 +3,18 @@
     <div class="card-header">
       <ul class="nav nav-tabs card-header-tabs">
         <li class="nav-item">
-          <a class="nav-link active" href="#">Share Allocation</a>
+          <a class="nav-link" :class="{ active: tab === 'SHARE' }" href="#" @click="tab = 'SHARE'">Share Allocation</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Vest Options</a>
+        <li class="nav-item" v-if="false">
+          <a class="nav-link" :class="{ active: tab === 'VEST' }" href="#" @click="tab = 'VEST'">Vest Options (WIP)</a>
         </li>
       </ul>
     </div>
-    <div class="card-body">
-      <h4 class="card-title">Share Allocation</h4>
-      <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-      <a href="#" class="btn btn-primary">Go somewhere</a>
+    <div class="card-body" v-show="tab === 'SHARE'">
+      <ShareAllocation :shareData="shareOptions" />
+    </div>
+    <div class="card-body" v-show="tab === 'VEST'">
+      <VestOptions :shareData="shareOptions" />
     </div>
   </div>
 </template>
@@ -21,11 +22,18 @@
 <script>
   import router from '@/router';
   import CONST from '../constants';
+  import ShareAllocation from './ShareAllocation';
+  import VestOptions from './VestOptions';
 
   export default {
     name: 'Home',
+    components: {
+      ShareAllocation,
+      VestOptions,
+    },
     data() {
       return {
+        tab: 'SHARE',
         shareOptions: [],
       };
     },

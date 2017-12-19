@@ -1,58 +1,69 @@
 <template>
-  <div class="row">
-    <div class="col-lg">
-      <p class="text-muted" v-show="shareOptions.length === 0">Add some share options in order to continue to next step</p>
+  <div>
+    <div class="row">
+      <div class="col-lg">
+        <div class="card">
+          <div class="card-header">Share Options</div>
+          <div class="card-body">
+            <p class="text-muted" v-show="shareOptions.length === 0">Add some share options in order to continue to next step</p>
 
-      <div v-show="shareOptions.length > 0">
-        <table class="table table-hover table-bordered">
-          <thead>
-            <tr>
-              <th>Year</th>
-              <th>Num of shares</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="(item, index) in shareOptions" v-bind:index="index" v-bind:key="index">
-              <td>{{ item.year }}</td>
-              <td>{{ item.shares }}</td>
-              <td>
-                <button type="button" class="btn btn-link" @click="deleteOption(index)">
-                  <i class="fa fa-trash-o text-danger" aria-hidden="true"/>
-                </button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        <div class="row">
-          <div class="col-md-4 offset-md-4 col-sm-6 offset-sm-3">
-            <button type="button" class="btn btn-primary btn-block" @click="goToVest">Next</button>
+            <div class="no-padding" v-show="shareOptions.length > 0">
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th>Year</th>
+                    <th>Num of shares</th>
+                    <th/>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="(item, index) in shareOptions" v-bind:index="index" v-bind:key="index">
+                    <td>{{ item.year }}</td>
+                    <td>{{ item.shares }}</td>
+                    <td>
+                      <button type="button" class="btn btn-link" @click="deleteOption(index)">
+                        <i class="fa fa-trash-o text-danger" aria-hidden="true"/>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg">
+        <div class="card">
+          <div class="card-header">Add new</div>
+          <div class="card-body">
+            <form>
+              <div class="form-group">
+                <label for="financialYearSelect">Financial Year</label>
+                <select class="form-control" id="financialYearSelect" v-model="addForm.year">
+                  <option>2015</option>
+                  <option>2016</option>
+                  <option selected>2017</option>
+                </select>
+                <small id="emailHelp" class="form-text text-muted">The financial year which share options are awarded</small>
+              </div>
+              <div class="form-group">
+                <label for="numberOfSharesInput">Number of share Options</label>
+                <input type="number" class="form-control" id="numberOfSharesInput" placeholder="Enter shares..." v-model.number="addForm.shares">
+              </div>
+              <div class="row">
+                <div class="text-center col-md-4 offset-md-4 col-sm-6 offset-sm-3">
+                  <button type="button" class="btn btn-outline-success btn-block" @click="addNewOptions">Add</button>
+                </div>
+              </div>
+            </form>
           </div>
         </div>
       </div>
     </div>
-
-    <div class="col-lg">
-      <form>
-        <div class="form-group">
-          <label for="financialYearSelect">Financial Year</label>
-          <select class="form-control" id="financialYearSelect" v-model="addForm.year">
-            <option>2015</option>
-            <option>2016</option>
-            <option selected>2017</option>
-          </select>
-          <small id="emailHelp" class="form-text text-muted">The financial year which share options are awarded</small>
-        </div>
-        <div class="form-group">
-          <label for="numberOfSharesInput">Number of share Options</label>
-          <input type="number" class="form-control" id="numberOfSharesInput" placeholder="Enter shares..." v-model.number="addForm.shares">
-        </div>
-        <div class="row">
-          <div class="text-center col-md-4 offset-md-4 col-sm-6 offset-sm-3">
-            <button type="button" class="btn btn-outline-success btn-block" @click="addNewOptions">Add</button>
-          </div>
-        </div>
-      </form>
+    <div class="row btn-next">
+      <div class="col-md-2 col-sm-3">
+        <button type="button" class="btn btn-primary btn-block" @click="goToVest">Next</button>
+      </div>
     </div>
   </div>
 </template>
@@ -68,10 +79,10 @@
 
   const sharePrices = [{
     year: '2015',
-    price: 0.5,
+    price: 0.50,
   }, {
     year: '2016',
-    price: 1,
+    price: 1.00,
   }, {
     year: '2017',
     price: 1.58,
@@ -136,21 +147,33 @@
 </script>
 
 <style lang="scss" scoped>
-  .col-lg {
-    margin-top: 20px;
+  .row {
+    .col-lg {
+      margin-top: 20px;
 
-    table {
-      .btn-link {
-        padding: 0;
+      .no-padding {
+        margin: -1.25rem;
+
+        table {
+          .btn-link {
+            padding: 0;
+          }
+        }
+      }
+
+      form {
+        text-align: left;
       }
     }
 
-    button {
-      cursor: pointer;
+    .btn-next {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
     }
+  }
 
-    form {
-      text-align: left;
-    }
+  button {
+    cursor: pointer;
   }
 </style>
